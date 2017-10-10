@@ -4,16 +4,17 @@ import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
 import io.reactivex.Observable
+import pl.elpassion.archcomptest.items.Items.*
 
-class ItemsModel(private val api: Items.Api) {
-    val state: BehaviorRelay<Items.State> = BehaviorRelay.createDefault<Items.State>(Items.State.Idle)
-    val event: Relay<Items.Event> = PublishRelay.create()
+class ItemsModel(private val api: Api) {
+    val state: BehaviorRelay<State> = BehaviorRelay.createDefault<State>(State.Idle)
+    val event: Relay<Event> = PublishRelay.create()
     private val disposable = callApiOnCreate().subscribe(state)
 
-    private fun callApiOnCreate(): Observable<Items.State> {
-        return event.ofType(Items.Event.OnCreate::class.java).flatMap {
+    private fun callApiOnCreate(): Observable<State> {
+        return event.ofType(Event.OnCreate::class.java).flatMap {
             api.call().toObservable()
-                    .map { Items.State.Items(it) }
+                    .map { State.Items(it) }
         }
     }
 }

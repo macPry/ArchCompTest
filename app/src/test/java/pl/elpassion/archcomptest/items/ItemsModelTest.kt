@@ -4,6 +4,7 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.subjects.SingleSubject
+import org.junit.Assert
 import pl.elpassion.archcomptest.common.TreeSpec
 import pl.elpassion.archcomptest.items.Items.*
 
@@ -28,6 +29,16 @@ class ItemsModelTest : TreeSpec() {
             }
             assert("should call api") {
                 verify(api).call()
+            }
+        }
+        nest("When activity starts and api returns items") {
+            val response = Api.Response(listOf(Item("1"), Item("2")))
+            before {
+                model.event.accept(Event.OnCreate)
+                apiSubject.onSuccess(response)
+            }
+            assert("then items should be displayed") {
+                Assert.assertEquals(State.Items(response), state.values().last())
             }
         }
     }
