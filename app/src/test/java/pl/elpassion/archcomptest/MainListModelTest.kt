@@ -8,7 +8,6 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.SingleSubject
 import pl.elpassion.archcomptest.common.TreeSpec
 
@@ -61,11 +60,7 @@ interface MainList {
 class MainListModel(private val api: MainList.Api) {
     val state: Relay<MainList.State> = BehaviorRelay.createDefault<MainList.State>(MainList.State.Idle)
     val event: Relay<MainList.Event> = PublishRelay.create()
-    private var disposable: Disposable? = null
-
-    init {
-        disposable = callApiOnCreate().subscribe(state)
-    }
+    private val disposable = callApiOnCreate().subscribe(state)
 
     private fun callApiOnCreate(): Observable<MainList.State> {
         return event.ofType(MainList.Event.OnCreate::class.java).flatMap {
