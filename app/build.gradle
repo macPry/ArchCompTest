@@ -1,6 +1,8 @@
 buildscript {
     ext.support_version = '26.1.0'
     ext.rxrelay_version = '2.0.0'
+    ext.rxjava2_version = '2.1.1'
+    ext.rxkotlin_version = '2.1.0'
     ext.kotlintest_version = '2.0.5'
     ext.mockito_kotlin_version = '1.5.0'
 }
@@ -30,14 +32,17 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay_version"
+    implementation group: 'com.android.support', name: 'appcompat-v7', version: support_version
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
+    implementation group: 'com.jakewharton.rxrelay2', name: 'rxrelay', version: rxrelay_version
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: rxjava2_version
+    implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: rxkotlin_version
     implementation(group: 'io.kotlintest', name: 'kotlintest', version: kotlintest_version) {
         exclude group: 'org.mockito', module: 'mockito-core'
     }
 
+    testImplementation group: 'com.nhaarman', name: 'mockito-kotlin-kt1.1', version: mockito_kotlin_version
     testImplementation 'junit:junit:4.12'
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockito_kotlin_version"
+
+    androidTestImplementation group: 'com.nhaarman', name: 'mockito-kotlin-kt1.1', version: mockito_kotlin_version
 }
