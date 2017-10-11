@@ -12,16 +12,17 @@ class ItemsModel(private val api: Api) {
     private val disposable = itemsModel().subscribe(states)
 
     private fun itemsModel(): Observable<State> = Observable.merge(
-            onCreate(),
-            onErrorClick())
+            callApi(),
+            handleErrorClick())
 
-    private fun onCreate(): Observable<State> = events.ofType(Event.Create::class.java).flatMap {
-        api.call().toObservable()
-                .map { State.Items(it) as State }
-                .startWith(State.Loading)
-                .onErrorReturn { State.Error }
-    }
+    private fun callApi(): Observable<State> = events.filter { it is Event.Create || it is Event.Refresh }
+            .flatMap {
+                api.call().toObservable()
+                        .map { State.Items(it) as State }
+                        .startWith(State.Loading)
+                        .onErrorReturn { State.Error }
+            }
 
-    private fun onErrorClick(): Observable<State> = events.ofType(Event.ErrorClick::class.java)
+    private fun handleErrorClick(): Observable<State> = events.ofType(Event.ErrorClick::class.java)
             .map { State.Idle }
 }

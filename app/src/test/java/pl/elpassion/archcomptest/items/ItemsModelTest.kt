@@ -1,8 +1,6 @@
 package pl.elpassion.archcomptest.items
 
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import io.reactivex.subjects.SingleSubject
 import pl.elpassion.archcomptest.common.TreeSpec
 import pl.elpassion.archcomptest.common.assertLastValue
@@ -55,12 +53,18 @@ class ItemsModelTest : TreeSpec() {
         }
         nest("On error click") {
             before {
-                onCreate()
-                apiSubject.onError(RuntimeException())
                 model.events.accept(Event.ErrorClick)
             }
             assert("should not show error") {
                 states.assertLastValue(State.Idle)
+            }
+        }
+        nest("On refresh") {
+            before {
+                model.events.accept(Event.Refresh)
+            }
+            assert("should call api") {
+                verify(api).call()
             }
         }
     }
