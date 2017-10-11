@@ -13,7 +13,8 @@ class ItemsModel(private val api: Api) {
 
     private fun itemsModel(): Observable<State> = Observable.merge(
             callApi(),
-            handleErrorClick())
+            handleErrorClick(),
+            handleItemClick())
 
     private fun callApi(): Observable<State> = events.filter { it is Event.Create || it is Event.Refresh }
             .flatMap {
@@ -25,4 +26,7 @@ class ItemsModel(private val api: Api) {
 
     private fun handleErrorClick(): Observable<State> = events.ofType(Event.ErrorClick::class.java)
             .map { State.Idle }
+
+    private fun handleItemClick(): Observable<State> = events.ofType(Event.ItemClick::class.java)
+            .map { State.OpenDetails(it.item) }
 }

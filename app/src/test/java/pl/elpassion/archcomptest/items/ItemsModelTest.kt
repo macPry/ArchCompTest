@@ -67,6 +67,14 @@ class ItemsModelTest : TreeSpec() {
                 verify(api).call()
             }
         }
+        nest("On item click") {
+            before {
+                model.events.accept(Event.ItemClick(Item("3")))
+            }
+            assert("should pass item data") {
+                states.assertLastValue(State.OpenDetails(Item("3")))
+            }
+        }
     }
 
     private fun onCreate() = model.events.accept(Event.Create)
