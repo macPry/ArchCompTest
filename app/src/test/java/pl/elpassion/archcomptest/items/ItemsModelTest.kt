@@ -13,7 +13,7 @@ class ItemsModelTest : TreeSpec() {
     private val api = mock<Api> {
         on { call() } doReturn apiSubject
     }
-    private val model = ItemsModel(api, Schedulers.trampoline())
+    private val model = ItemsModel(api, Schedulers.trampoline(), Schedulers.trampoline())
     private val states = model.states.test()
 
     init {

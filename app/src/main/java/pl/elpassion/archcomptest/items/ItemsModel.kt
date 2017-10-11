@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import pl.elpassion.archcomptest.items.Items.*
 
-class ItemsModel(private val api: Api, private val backgroundScheduler: Scheduler) {
+class ItemsModel(private val api: Api, private val backgroundScheduler: Scheduler, val uiScheduler: Scheduler) {
     val states: BehaviorRelay<State> = BehaviorRelay.createDefault<State>(State.Idle)
     val events: Relay<Event> = PublishRelay.create()
     private val disposable = itemsModel().subscribe(states)
@@ -21,6 +21,7 @@ class ItemsModel(private val api: Api, private val backgroundScheduler: Schedule
             .flatMap {
                 api.call().toObservable()
                         .subscribeOn(backgroundScheduler)
+                        .observeOn(uiScheduler)
                         .map { State.Items(it) as State }
                         .startWith(State.Loading)
                         .onErrorReturn { State.Error }
