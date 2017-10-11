@@ -1,6 +1,7 @@
 package pl.elpassion.archcomptest.items
 
 import com.nhaarman.mockito_kotlin.*
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.SingleSubject
 import pl.elpassion.archcomptest.common.TreeSpec
 import pl.elpassion.archcomptest.common.assertLastValue
@@ -12,7 +13,7 @@ class ItemsModelTest : TreeSpec() {
     private val api = mock<Api> {
         on { call() } doReturn apiSubject
     }
-    private val model = ItemsModel(api)
+    private val model = ItemsModel(api, Schedulers.trampoline())
     private val states = model.states.test()
 
     init {
