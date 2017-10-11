@@ -16,6 +16,7 @@ class ItemsModel(private val api: Api) {
             api.call().toObservable()
                     .map { State.Items(it) as State }
                     .startWith(State.Loading)
+                    .onErrorReturn { State.Error }
         }
     }
 }

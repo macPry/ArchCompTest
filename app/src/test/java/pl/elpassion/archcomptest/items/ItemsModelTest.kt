@@ -25,7 +25,7 @@ class ItemsModelTest : TreeSpec() {
         }
         nest("On create") {
             before {
-                callOnCreate()
+                onCreate()
             }
             assert("should call api") {
                 verify(api).call()
@@ -37,14 +37,23 @@ class ItemsModelTest : TreeSpec() {
         nest("On create when api returns items") {
             val response = Api.Response(listOf(Item("1"), Item("2")))
             before {
-                callOnCreate()
+                onCreate()
                 apiSubject.onSuccess(response)
             }
             assert("then items should be displayed") {
                 states.assertLastValue(State.Items(response))
             }
         }
+        nest("On create when api returns error") {
+            before {
+                onCreate()
+                apiSubject.onError(RuntimeException())
+            }
+            assert("should show error") {
+                states.assertLastValue(State.Error)
+            }
+        }
     }
 
-    private fun callOnCreate() = model.events.accept(Event.OnCreate)
+    private fun onCreate() = model.events.accept(Event.OnCreate)
 }

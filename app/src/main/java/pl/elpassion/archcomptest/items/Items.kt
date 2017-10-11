@@ -8,6 +8,7 @@ interface Items {
         object Idle : State()
         data class Items(val response: Api.Response) : State()
         object Loading : State()
+        object Error : State()
     }
 
     sealed class Event {
