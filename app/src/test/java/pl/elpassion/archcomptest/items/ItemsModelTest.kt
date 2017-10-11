@@ -15,12 +15,12 @@ class ItemsModelTest : TreeSpec() {
         on { call() } doReturn apiSubject
     }
     private val model = ItemsModel(api)
-    private val state = model.state.test()
+    private val states = model.state.test()
 
     init {
         nest("When start") {
             assert("should be idle") {
-                state.assertValue(State.Idle)
+                states.assertValue(State.Idle)
             }
         }
         nest("On create") {
@@ -31,7 +31,7 @@ class ItemsModelTest : TreeSpec() {
                 verify(api).call()
             }
             assert("should show loader") {
-                state.assertLastValue(State.Loading)
+                states.assertLastValue(State.Loading)
             }
         }
         nest("On create when api returns items") {
@@ -41,7 +41,7 @@ class ItemsModelTest : TreeSpec() {
                 apiSubject.onSuccess(response)
             }
             assert("then items should be displayed") {
-                state.assertLastValue(State.Items(response))
+                states.assertLastValue(State.Items(response))
             }
         }
     }
