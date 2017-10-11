@@ -7,12 +7,12 @@ import io.reactivex.Observable
 import pl.elpassion.archcomptest.items.Items.*
 
 class ItemsModel(private val api: Api) {
-    val state: BehaviorRelay<State> = BehaviorRelay.createDefault<State>(State.Idle)
-    val event: Relay<Event> = PublishRelay.create()
-    private val disposable = callApiOnCreate().subscribe(state)
+    val states: BehaviorRelay<State> = BehaviorRelay.createDefault<State>(State.Idle)
+    val events: Relay<Event> = PublishRelay.create()
+    private val disposable = callApiOnCreate().subscribe(states)
 
     private fun callApiOnCreate(): Observable<State> {
-        return event.ofType(Event.OnCreate::class.java).flatMap {
+        return events.ofType(Event.OnCreate::class.java).flatMap {
             api.call().toObservable()
                     .map { State.Items(it) as State }
                     .startWith(State.Loading)
