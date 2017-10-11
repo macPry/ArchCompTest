@@ -40,7 +40,7 @@ class ItemsModelTest : TreeSpec() {
                 onCreate()
                 apiSubject.onSuccess(response)
             }
-            assert("then items should be displayed") {
+            assert("should display items") {
                 states.assertLastValue(State.Items(response))
             }
         }
@@ -53,7 +53,17 @@ class ItemsModelTest : TreeSpec() {
                 states.assertLastValue(State.Error)
             }
         }
+        nest("On error click") {
+            before {
+                onCreate()
+                apiSubject.onError(RuntimeException())
+                model.events.accept(Event.ErrorClick)
+            }
+            assert("should not show error") {
+                states.assertLastValue(State.Idle)
+            }
+        }
     }
 
-    private fun onCreate() = model.events.accept(Event.OnCreate)
+    private fun onCreate() = model.events.accept(Event.Create)
 }

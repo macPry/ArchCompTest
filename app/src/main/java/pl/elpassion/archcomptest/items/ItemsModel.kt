@@ -9,14 +9,19 @@ import pl.elpassion.archcomptest.items.Items.*
 class ItemsModel(private val api: Api) {
     val states: BehaviorRelay<State> = BehaviorRelay.createDefault<State>(State.Idle)
     val events: Relay<Event> = PublishRelay.create()
-    private val disposable = callApiOnCreate().subscribe(states)
+    private val disposable = itemsModel().subscribe(states)
 
-    private fun callApiOnCreate(): Observable<State> {
-        return events.ofType(Event.OnCreate::class.java).flatMap {
-            api.call().toObservable()
-                    .map { State.Items(it) as State }
-                    .startWith(State.Loading)
-                    .onErrorReturn { State.Error }
-        }
+    private fun itemsModel(): Observable<State> = Observable.merge(
+            onCreate(),
+            onErrorClick())
+
+    private fun onErrorClick(): Observable<State> = events.ofType(Event.ErrorClick::class.java)
+            .map { State.Idle }
+
+    private fun onCreate(): Observable<State> = events.ofType(Event.Create::class.java).flatMap {
+        api.call().toObservable()
+                .map { State.Items(it) as State }
+                .startWith(State.Loading)
+                .onErrorReturn { State.Error }
     }
 }

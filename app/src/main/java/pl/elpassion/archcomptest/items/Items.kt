@@ -12,7 +12,8 @@ interface Items {
     }
 
     sealed class Event {
-        object OnCreate : Event()
+        object Create : Event()
+        object ErrorClick : Event()
     }
 
     interface Api {
