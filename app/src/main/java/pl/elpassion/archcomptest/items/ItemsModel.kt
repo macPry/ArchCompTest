@@ -15,13 +15,13 @@ class ItemsModel(private val api: Api) {
             onCreate(),
             onErrorClick())
 
-    private fun onErrorClick(): Observable<State> = events.ofType(Event.ErrorClick::class.java)
-            .map { State.Idle }
-
     private fun onCreate(): Observable<State> = events.ofType(Event.Create::class.java).flatMap {
         api.call().toObservable()
                 .map { State.Items(it) as State }
                 .startWith(State.Loading)
                 .onErrorReturn { State.Error }
     }
+
+    private fun onErrorClick(): Observable<State> = events.ofType(Event.ErrorClick::class.java)
+            .map { State.Idle }
 }
