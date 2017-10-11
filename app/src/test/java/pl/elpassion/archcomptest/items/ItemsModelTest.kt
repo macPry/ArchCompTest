@@ -3,6 +3,7 @@ package pl.elpassion.archcomptest.items
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.SingleSubject
 import org.junit.Assert
 import pl.elpassion.archcomptest.common.TreeSpec
@@ -31,7 +32,7 @@ class ItemsModelTest : TreeSpec() {
                 verify(api).call()
             }
             assert("should show loader") {
-                Assert.assertEquals(State.Loading, state.values().last())
+                state.assertLastState(State.Loading)
             }
         }
         nest("On create when api returns items") {
@@ -41,8 +42,12 @@ class ItemsModelTest : TreeSpec() {
                 apiSubject.onSuccess(response)
             }
             assert("then items should be displayed") {
-                Assert.assertEquals(State.Items(response), state.values().last())
+                state.assertLastState(State.Items(response))
             }
         }
+    }
+
+    private fun <T : State> TestObserver<T>.assertLastState(state: T) {
+        Assert.assertEquals(state, values().last())
     }
 }
