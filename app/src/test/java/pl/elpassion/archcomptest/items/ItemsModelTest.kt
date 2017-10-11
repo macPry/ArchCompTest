@@ -18,7 +18,7 @@ class ItemsModelTest : TreeSpec() {
     private val states = model.states.test()
 
     init {
-        nest("When start") {
+        nest("On start") {
             assert("should be idle") {
                 states.assertLastValue(State.Idle)
             }
