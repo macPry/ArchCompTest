@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import pl.elpassion.archcomptest.items.Items.*
 
-class ItemsModel(private val api: Api, private val backgroundScheduler: Scheduler, val uiScheduler: Scheduler) {
+class ItemsModel(private val api: Api, private val backgroundScheduler: Scheduler, private val uiScheduler: Scheduler) {
     val states: BehaviorRelay<State> = BehaviorRelay.createDefault<State>(State.Idle)
     val events: Relay<Event> = PublishRelay.create()
     private val disposable = itemsModel().subscribe(states)
