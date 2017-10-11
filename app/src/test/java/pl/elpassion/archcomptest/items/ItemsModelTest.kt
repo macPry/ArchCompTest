@@ -20,12 +20,12 @@ class ItemsModelTest : TreeSpec() {
     init {
         nest("When start") {
             assert("should be idle") {
-                states.assertValue(State.Idle)
+                states.assertLastValue(State.Idle)
             }
         }
         nest("On create") {
             before {
-                model.events.accept(Event.OnCreate)
+                callOnCreate()
             }
             assert("should call api") {
                 verify(api).call()
@@ -37,7 +37,7 @@ class ItemsModelTest : TreeSpec() {
         nest("On create when api returns items") {
             val response = Api.Response(listOf(Item("1"), Item("2")))
             before {
-                model.events.accept(Event.OnCreate)
+                callOnCreate()
                 apiSubject.onSuccess(response)
             }
             assert("then items should be displayed") {
@@ -45,4 +45,6 @@ class ItemsModelTest : TreeSpec() {
             }
         }
     }
+
+    private fun callOnCreate() = model.events.accept(Event.OnCreate)
 }
