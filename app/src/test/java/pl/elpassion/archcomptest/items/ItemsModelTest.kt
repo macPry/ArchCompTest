@@ -30,6 +30,9 @@ class ItemsModelTest : TreeSpec() {
             assert("should call api") {
                 verify(api).call()
             }
+            assert("should show loader") {
+                Assert.assertEquals(State.Loading, state.values().last())
+            }
         }
         nest("On create when api returns items") {
             val response = Api.Response(listOf(Item("1"), Item("2")))

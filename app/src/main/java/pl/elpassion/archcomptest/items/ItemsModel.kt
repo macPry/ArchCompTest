@@ -14,7 +14,8 @@ class ItemsModel(private val api: Api) {
     private fun callApiOnCreate(): Observable<State> {
         return event.ofType(Event.OnCreate::class.java).flatMap {
             api.call().toObservable()
-                    .map { State.Items(it) }
+                    .map { State.Items(it) as State }
+                    .startWith(State.Loading)
         }
     }
 }
