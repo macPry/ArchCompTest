@@ -6,15 +6,15 @@ interface Items {
 
     sealed class State {
         object Idle : State()
-        data class Items(val response: Api.Response) : State()
         object Loading : State()
+        data class Items(val response: Api.Response) : State()
         object Error : State()
     }
 
     sealed class Event {
         object Create : Event()
-        object ErrorClick : Event()
         object Refresh : Event()
+        object ErrorClick : Event()
     }
 
     interface Api {
