@@ -23,7 +23,7 @@ class ItemsModelTest : TreeSpec() {
                 state.assertValue(State.Idle)
             }
         }
-        nest("When activity starts") {
+        nest("On create") {
             before {
                 model.event.accept(Event.OnCreate)
             }
@@ -31,7 +31,7 @@ class ItemsModelTest : TreeSpec() {
                 verify(api).call()
             }
         }
-        nest("When activity starts and api returns items") {
+        nest("On create when api returns items") {
             val response = Api.Response(listOf(Item("1"), Item("2")))
             before {
                 model.event.accept(Event.OnCreate)
