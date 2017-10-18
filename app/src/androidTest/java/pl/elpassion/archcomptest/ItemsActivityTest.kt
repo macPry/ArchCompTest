@@ -2,14 +2,10 @@ package pl.elpassion.archcomptest
 
 import android.support.test.rule.ActivityTestRule
 import com.elpassion.android.commons.espresso.InitIntentsRule
-import com.elpassion.android.commons.espresso.isDisplayed
-import com.elpassion.android.commons.espresso.onText
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Rule
-import org.junit.Test
-import pl.elpassion.archcomptest.items.DI
 import pl.elpassion.archcomptest.items.Items
 import pl.elpassion.archcomptest.items.Items.*
 import pl.elpassion.archcomptest.items.ItemsActivity

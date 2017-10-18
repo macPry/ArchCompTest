@@ -1,8 +1,6 @@
-package pl.elpassion.archcomptest.items
+package pl.elpassion.archcomptest.app
 
 import io.reactivex.Single
-import pl.elpassion.archcomptest.app.App
-import pl.elpassion.archcomptest.app.AppModel
 
 object DI {
 
