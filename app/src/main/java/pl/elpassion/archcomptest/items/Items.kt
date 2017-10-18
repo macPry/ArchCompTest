@@ -1,23 +1,17 @@
 package pl.elpassion.archcomptest.items
 
-import com.jakewharton.rxrelay2.BehaviorRelay
-import com.jakewharton.rxrelay2.PublishRelay
+import pl.elpassion.archcomptest.app.App
 
 interface Items {
 
-    interface Model {
-        val states: BehaviorRelay<State>
-        val events: PublishRelay<Event>
-    }
-
     sealed class State {
-
+        data class Items(val items: List<App.Item>) : State()
     }
 
     sealed class Event {
         object Create : Event()
-        object Refresh : Event()
+        /*object Refresh : Event()
         object ErrorClick : Event()
-        object ItemClick : Event()
+        object ItemClick : Event()*/
     }
 }

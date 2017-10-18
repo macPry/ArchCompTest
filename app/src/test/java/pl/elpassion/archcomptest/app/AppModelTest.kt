@@ -4,9 +4,9 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.subjects.SingleSubject
+import pl.elpassion.archcomptest.app.App.*
 import pl.elpassion.archcomptest.common.TreeSpec
 import pl.elpassion.archcomptest.common.assertLastValue
-import pl.elpassion.archcomptest.app.App.*
 
 class AppModelTest : TreeSpec() {
 
