@@ -7,6 +7,7 @@ interface Items {
     sealed class State {
         data class Items(val items: List<App.Item>) : State()
         data class Error(val exception: Throwable) : State()
+        object Loading : State()
     }
 
     sealed class Event {

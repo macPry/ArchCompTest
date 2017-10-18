@@ -23,6 +23,7 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application) {
                 .subscribe {
                     when (it) {
                         is App.States.Items -> state.postValue(State.Items(it.items))
+                        is App.States.Loading -> state.postValue(State.Loading)
                         is App.States.Error -> state.postValue(State.Error(it.exception))
                     }
                 }

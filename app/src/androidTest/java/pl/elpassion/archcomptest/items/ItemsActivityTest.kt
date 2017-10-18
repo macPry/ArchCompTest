@@ -2,14 +2,18 @@ package pl.elpassion.archcomptest.items
 
 import android.support.test.rule.ActivityTestRule
 import com.elpassion.android.commons.espresso.isDisplayed
+import com.elpassion.android.commons.espresso.isNotDisplayed
+import com.elpassion.android.commons.espresso.onId
 import com.elpassion.android.commons.espresso.onText
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
+import com.nhaarman.mockito_kotlin.anyArray
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.observers.TestObserver
 import org.junit.Rule
 import org.junit.Test
+import pl.elpassion.archcomptest.R
 import pl.elpassion.archcomptest.app.App
 import pl.elpassion.archcomptest.app.DI
 
@@ -30,6 +34,24 @@ class ItemsActivityTest {
     init {
         DI.provideAppModel = { model }
         modelEvents.subscribe(testObserver)
+    }
+
+    @Test
+    fun shouldShowLoaderOnAppLoadingState() {
+        modelStates.accept(App.States.Loading)
+        onId(R.id.itemsLoader).isDisplayed()
+    }
+
+    @Test
+    fun shouldNotShowLoaderOnAppErrorState() {
+        modelStates.accept(App.States.Error(RuntimeException()))
+        onId(R.id.itemsLoader).isNotDisplayed()
+    }
+
+    @Test
+    fun shouldNotShowLoaderOnAppItemsState() {
+        modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
+        onId(R.id.itemsLoader).isNotDisplayed()
     }
 
     @Test
