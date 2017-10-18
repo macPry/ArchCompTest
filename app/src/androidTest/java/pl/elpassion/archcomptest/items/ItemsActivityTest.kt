@@ -1,10 +1,14 @@
 package pl.elpassion.archcomptest.items
 
+import android.support.test.InstrumentationRegistry
+import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
+import com.elpassion.android.commons.espresso.click
 import com.elpassion.android.commons.espresso.isDisplayed
 import com.elpassion.android.commons.espresso.onText
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.observers.TestObserver
@@ -43,6 +47,14 @@ class ItemsActivityTest {
     fun shouldShowErrorMessageOnAppError() {
         val exception = Exception("Some error")
         modelStates.accept(App.States.Error(exception))
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         onText(exception.message!!).isDisplayed()
+    }
+    
+    @Test
+    fun shouldShowRefreshButtonOnAppError() {
+        modelStates.accept(App.States.Error(RuntimeException()))
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+        onText("Refresh").isDisplayed()
     }
 }
