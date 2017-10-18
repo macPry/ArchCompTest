@@ -9,7 +9,7 @@ import pl.elpassion.archcomptest.items.Items.*
 
 class ItemsModelTest : TreeSpec() {
 
-    private val apiSubject = SingleSubject.create<Api.Response>()
+    /*private val apiSubject = SingleSubject.create<Api.Response>()
     private val api = mock<Api> {
         on { call() } doReturn apiSubject
     }
@@ -78,5 +78,5 @@ class ItemsModelTest : TreeSpec() {
         }
     }
 
-    private fun onCreate() = model.events.accept(Event.Create)
+    private fun onCreate() = model.events.accept(Event.Create)*/
 }

@@ -12,7 +12,7 @@ import pl.elpassion.archcomptest.items.Items.State
 
 class ItemsModelSchedulersTest {
 
-    private val apiSubject = SingleSubject.create<Items.Api.Response>()
+    /*private val apiSubject = SingleSubject.create<Items.Api.Response>()
     private val api = mock<Items.Api> {
         on { call() } doReturn apiSubject
     }
@@ -39,5 +39,5 @@ class ItemsModelSchedulersTest {
         states.assertLastValue(State.Loading)
         uiScheduler.triggerActions()
         states.assertLastValue(State.Error)
-    }
+    }*/
 }

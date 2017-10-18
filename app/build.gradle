@@ -5,6 +5,7 @@ buildscript {
     ext.rxkotlin_version = '2.1.0'
     ext.kotlintest_version = '2.0.5'
     ext.mockito_kotlin_version = '1.5.0'
+    ext.el_common_version = '0.0.21'
 }
 
 apply plugin: 'com.android.application'
@@ -33,7 +34,9 @@ android {
 
 dependencies {
     implementation group: 'com.android.support', name: 'appcompat-v7', version: support_version
+    implementation group: 'com.android.support', name: 'recyclerview-v7', version: support_version
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
+    implementation "android.arch.lifecycle:extensions:1.0.0-beta2"
     implementation group: 'com.jakewharton.rxrelay2', name: 'rxrelay', version: rxrelay_version
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: rxjava2_version
     implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: rxkotlin_version
@@ -45,4 +48,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation group: 'com.nhaarman', name: 'mockito-kotlin-kt1.1', version: mockito_kotlin_version
+    androidTestImplementation group: 'com.elpassion.android.commons', name: 'espresso', version: el_common_version
+    androidTestCompile 'com.android.support.test:rules:1.0.1'
 }

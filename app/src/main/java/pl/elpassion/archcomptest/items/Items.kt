@@ -1,29 +1,23 @@
 package pl.elpassion.archcomptest.items
 
-import io.reactivex.Single
+import com.jakewharton.rxrelay2.BehaviorRelay
+import com.jakewharton.rxrelay2.PublishRelay
 
 interface Items {
 
+    interface Model {
+        val states: BehaviorRelay<State>
+        val events: PublishRelay<Event>
+    }
+
     sealed class State {
-        object Idle : State()
-        object Loading : State()
-        data class Items(val response: Api.Response) : State()
-        object Error : State()
-        data class OpenDetails(val item: Item) : State()
+
     }
 
     sealed class Event {
         object Create : Event()
         object Refresh : Event()
         object ErrorClick : Event()
-        data class ItemClick(val item: Item) : Event()
+        object ItemClick : Event()
     }
-
-    interface Api {
-        data class Response(val items: List<Item>)
-
-        fun call(): Single<Response>
-    }
-
-    data class Item(val name: String)
 }
