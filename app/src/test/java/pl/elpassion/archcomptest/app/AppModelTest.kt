@@ -6,11 +6,12 @@ import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.subjects.SingleSubject
 import pl.elpassion.archcomptest.common.TreeSpec
 import pl.elpassion.archcomptest.common.assertLastValue
+import pl.elpassion.archcomptest.app.App.*
 
 class AppModelTest : TreeSpec() {
 
-    private val apiSubject = SingleSubject.create<List<App.Item>>()
-    private val api = mock<App.Api> {
+    private val apiSubject = SingleSubject.create<List<Item>>()
+    private val api = mock<Api> {
         on { getItems() } doReturn apiSubject
     }
     private val model = AppModel(api)
@@ -19,7 +20,7 @@ class AppModelTest : TreeSpec() {
     init {
         nest("On start") {
             assert("should be idle") {
-                states.assertLastValue(App.States.Idle)
+                states.assertLastValue(States.Idle)
             }
         }
         nest("On get items") {
@@ -30,17 +31,17 @@ class AppModelTest : TreeSpec() {
                 verify(api).getItems()
             }
             assert("should show loader") {
-                states.assertLastValue(App.States.Loading)
+                states.assertLastValue(States.Loading)
             }
         }
         nest("On get items when api returns items") {
-            val items = listOf(App.Item("1"), App.Item("2"))
+            val items = listOf(Item("1"), Item("2"))
             before {
                 getItems()
                 apiSubject.onSuccess(items)
             }
             assert("should return items") {
-                states.assertLastValue(App.States.Items(items))
+                states.assertLastValue(States.Items(items))
             }
         }
         nest("On get items when api returns error") {
@@ -49,10 +50,10 @@ class AppModelTest : TreeSpec() {
                 apiSubject.onError(RuntimeException())
             }
             assert("should return error") {
-                states.assertLastValue(App.States.Error)
+                states.assertLastValue(States.Error)
             }
         }
     }
 
-    private fun getItems() = model.events.accept(App.Events.GetItems)
+    private fun getItems() = model.events.accept(Events.GetItems)
 }
