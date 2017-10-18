@@ -19,6 +19,7 @@ class ItemsActivity : AppCompatActivity() {
                 is Items.State.Items -> it.items.forEach {
                     itemsLayout.addView(TextView(this).apply { text = it.name })
                 }
+                is Items.State.Error -> itemsLayout.addView(TextView(this).apply { text = it.exception.message })
             }
         })
         itemsViewModel.event.accept(Items.Event.Create)

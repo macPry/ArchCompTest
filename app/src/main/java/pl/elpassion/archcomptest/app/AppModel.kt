@@ -22,6 +22,6 @@ class AppModel(private val api: Api) : Model {
             api.getItems().toObservable()
                     .map { states.accept(States.Items(it)) }
                     .startWith(states.accept(States.Loading))
-                    .onErrorReturn { states.accept(States.Error) }
+                    .onErrorReturn { states.accept(States.Error(it)) }
                     .subscribe()
 }

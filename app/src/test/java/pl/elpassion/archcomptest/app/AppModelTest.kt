@@ -44,13 +44,14 @@ class AppModelTest : TreeSpec() {
                 states.assertLastValue(States.Items(items))
             }
         }
-        nest("On get items when api returns error") {
+        nest("On get items when api returns exception") {
+            val exception = RuntimeException()
             before {
                 getItems()
-                apiSubject.onError(RuntimeException())
+                apiSubject.onError(exception)
             }
-            assert("should return error") {
-                states.assertLastValue(States.Error)
+            assert("should return exception") {
+                states.assertLastValue(States.Error(exception))
             }
         }
     }

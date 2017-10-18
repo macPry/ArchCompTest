@@ -38,4 +38,11 @@ class ItemsActivityTest {
         onText("321").isDisplayed()
         onText("666").isDisplayed()
     }
+
+    @Test
+    fun shouldShowErrorMessageOnAppError() {
+        val exception = Exception("Some error")
+        modelStates.accept(App.States.Error(exception))
+        onText(exception.message!!).isDisplayed()
+    }
 }
