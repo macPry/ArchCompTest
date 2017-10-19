@@ -25,9 +25,17 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun updateViews(state: Items.State?) {
-        state?.let { itemsLoader.visibility = if (it.isLoading) View.VISIBLE else View.GONE }
-        state?.items?.let { items.clear(); items.addAll(it); itemsRecycler.adapter.notifyDataSetChanged() }
+        state?.let { showIfIsLoading(it) }
+        state?.items?.let { updateList(it) }
         state?.exception?.let(this::showError)
+    }
+
+    private fun showIfIsLoading(state: Items.State) {
+        itemsLoader.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun updateList(newItems: List<App.Item>) {
+        items.clear(); items.addAll(newItems); itemsRecycler.adapter.notifyDataSetChanged()
     }
 
     private fun showError(exception: Throwable) {
