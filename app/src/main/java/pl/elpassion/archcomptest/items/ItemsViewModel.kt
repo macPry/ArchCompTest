@@ -22,9 +22,9 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application) {
                 .takeUntil(clear)
                 .subscribe {
                     when (it) {
-                        is App.States.Items -> state.postValue(State.Items(it.items))
-                        is App.States.Loading -> state.postValue(State.Loading)
-                        is App.States.Error -> state.postValue(State.Error(it.exception))
+                        is App.States.Items -> state.postValue(State(items = it.items))
+                        is App.States.Loading -> state.postValue(State(isLoading = true))
+                        is App.States.Error -> state.postValue(State(exception = it.exception))
                     }
                 }
         event.map {

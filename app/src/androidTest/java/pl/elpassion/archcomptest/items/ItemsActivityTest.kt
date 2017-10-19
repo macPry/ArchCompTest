@@ -7,7 +7,6 @@ import com.elpassion.android.commons.espresso.onId
 import com.elpassion.android.commons.espresso.onText
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
-import com.nhaarman.mockito_kotlin.anyArray
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.observers.TestObserver

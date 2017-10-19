@@ -23,17 +23,13 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun updateViews(state: Items.State?) {
-        itemsLoader.visibility = if (state is Items.State.Loading) View.VISIBLE else View.GONE
-        when (state) {
-            is Items.State.Items -> state.items.forEach {
-                itemsLayout.addView(TextView(this).apply { text = it.name })
-            }
-            is Items.State.Error -> showError(state)
-        }
+        state?.let { itemsLoader.visibility = if (it.isLoading) View.VISIBLE else View.GONE }
+        state?.items?.forEach { itemsLayout.addView(TextView(this).apply { text = it.name }) }
+        state?.exception?.let(this::showError)
     }
 
-    private fun showError(error: Items.State.Error) {
-        Snackbar.make(itemsLayout, error.exception.message.toString(), Snackbar.LENGTH_SHORT)
+    private fun showError(exception: Throwable) {
+        Snackbar.make(itemsLayout, exception.message.toString(), Snackbar.LENGTH_SHORT)
                 .setAction("Refresh", { })
                 .show()
     }
