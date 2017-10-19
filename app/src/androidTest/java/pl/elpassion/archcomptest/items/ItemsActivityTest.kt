@@ -1,6 +1,5 @@
 package pl.elpassion.archcomptest.items
 
-import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import com.elpassion.android.commons.espresso.*
 import com.elpassion.android.commons.espresso.recycler.onRecyclerViewItem
@@ -8,12 +7,15 @@ import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.archcomptest.R
 import pl.elpassion.archcomptest.app.App
 import pl.elpassion.archcomptest.app.DI
+import pl.elpassion.archcomptest.common.assertLastValue
 
 class ItemsActivityTest {
 
@@ -62,14 +64,19 @@ class ItemsActivityTest {
     @Test
     fun shouldShowErrorMessageOnAppError() {
         modelStates.accept(App.States.Items(exception = Exception("Some error")))
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         onText("Some error").isDisplayed()
     }
 
     @Test
     fun shouldShowRefreshButtonOnAppError() {
         modelStates.accept(App.States.Items(exception = RuntimeException()))
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-        onText("Refresh").isDisplayed()
+        onText(R.string.refresh).isDisplayed()
+    }
+
+    @Test
+    fun shouldCallGetItemsSecondTimeOnRefreshClicked() {
+        modelStates.accept(App.States.Items(exception = RuntimeException()))
+        onText(R.string.refresh).click()
+        testObserver.assertValueAt(1, { it is App.Events.GetItems })
     }
 }

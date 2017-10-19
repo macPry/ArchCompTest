@@ -3,6 +3,7 @@ buildscript {
     ext.rxrelay_version = '2.0.0'
     ext.rxjava2_version = '2.1.1'
     ext.rxkotlin_version = '2.1.0'
+    ext.rxbinding_version = '2.0.0'
     ext.kotlintest_version = '2.0.5'
     ext.mockito_kotlin_version = '1.5.0'
     ext.mockito_android_version = '2.11.0'
@@ -50,6 +51,7 @@ dependencies {
     implementation group: 'com.jakewharton.rxrelay2', name: 'rxrelay', version: rxrelay_version
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: rxjava2_version
     implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: rxkotlin_version
+    implementation group: 'com.jakewharton.rxbinding2', name: 'rxbinding-design-kotlin', version: rxbinding_version
     implementation(group: 'io.kotlintest', name: 'kotlintest', version: kotlintest_version) {
         exclude group: 'org.mockito', module: 'mockito-core'
     }
@@ -62,6 +64,6 @@ dependencies {
     androidTestImplementation group: 'com.elpassion.android.commons', name: 'espresso', version: el_common_version
     androidTestImplementation group: 'com.elpassion.android.commons', name: 'recycler', version: el_common_version
     androidTestImplementation group: 'com.android.support.test', name: 'runner', version: support_test_version
-    androidTestCompile group: 'com.android.support.test', name: 'rules', version: support_test_version
+    androidTestImplementation group: 'com.android.support.test', name: 'rules', version: support_test_version
     androidTestUtil group: 'com.android.support.test', name: 'orchestrator', version: support_test_version
 }
