@@ -2,6 +2,7 @@ package pl.elpassion.archcomptest.app
 
 import io.reactivex.Single
 import pl.elpassion.archcomptest.app.App.*
+import java.util.concurrent.TimeUnit
 
 object DI {
 
@@ -13,7 +14,7 @@ object DI {
 
     private val apiProvider = object : Api {
         override fun getItems(): Single<List<Item>> {
-            return Single.just(listOf(Item("ItemName1"), Item("ItemName2")))
+            return Single.just(listOf(Item("ItemName1"), Item("ItemName2"))).delay(2, TimeUnit.SECONDS)
         }
     }
 }
