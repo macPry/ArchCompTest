@@ -60,6 +60,7 @@ dependencies {
     androidTestImplementation group: 'com.nhaarman', name: 'mockito-kotlin-kt1.1', version: mockito_kotlin_version
     androidTestImplementation group: 'org.mockito', name: 'mockito-android', version: mockito_android_version
     androidTestImplementation group: 'com.elpassion.android.commons', name: 'espresso', version: el_common_version
+    androidTestImplementation group: 'com.elpassion.android.commons', name: 'recycler', version: el_common_version
     androidTestImplementation group: 'com.android.support.test', name: 'runner', version: support_test_version
     androidTestCompile group: 'com.android.support.test', name: 'rules', version: support_test_version
     androidTestUtil group: 'com.android.support.test', name: 'orchestrator', version: support_test_version

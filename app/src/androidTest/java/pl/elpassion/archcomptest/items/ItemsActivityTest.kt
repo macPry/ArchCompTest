@@ -2,10 +2,8 @@ package pl.elpassion.archcomptest.items
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
-import com.elpassion.android.commons.espresso.isDisplayed
-import com.elpassion.android.commons.espresso.isNotDisplayed
-import com.elpassion.android.commons.espresso.onId
-import com.elpassion.android.commons.espresso.onText
+import com.elpassion.android.commons.espresso.*
+import com.elpassion.android.commons.espresso.recycler.onRecyclerViewItem
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
 import com.nhaarman.mockito_kotlin.doReturn
@@ -57,8 +55,8 @@ class ItemsActivityTest {
     @Test
     fun shouldShowItemsOnAppItemsState() {
         modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
-        onText("321").isDisplayed()
-        onText("666").isDisplayed()
+        onRecyclerViewItem(R.id.itemsRecycler, 0, R.id.itemView).hasChildWithText("321")
+        onRecyclerViewItem(R.id.itemsRecycler, 1, R.id.itemView).hasChildWithText("666")
     }
 
     @Test
