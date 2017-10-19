@@ -37,13 +37,13 @@ class ItemsActivityTest {
 
     @Test
     fun shouldShowLoaderOnAppLoadingState() {
-        modelStates.accept(App.States.Loading)
+        modelStates.accept(App.States.Items(isLoading = true))
         onId(R.id.itemsLoader).isDisplayed()
     }
 
     @Test
     fun shouldNotShowLoaderOnAppErrorState() {
-        modelStates.accept(App.States.Error(RuntimeException()))
+        modelStates.accept(App.States.Items(exception = RuntimeException()))
         onId(R.id.itemsLoader).isNotDisplayed()
     }
 
@@ -63,13 +63,13 @@ class ItemsActivityTest {
     @Test
     fun shouldShowErrorMessageOnAppError() {
         val exception = Exception("Some error")
-        modelStates.accept(App.States.Error(exception))
+        modelStates.accept(App.States.Items(exception = exception))
         onText(exception.message!!).isDisplayed()
     }
 
     @Test
     fun shouldShowRefreshButtonOnAppError() {
-        modelStates.accept(App.States.Error(RuntimeException()))
+        modelStates.accept(App.States.Items(exception = RuntimeException()))
         onText("Refresh").isDisplayed()
     }
 }

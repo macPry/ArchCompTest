@@ -13,9 +13,11 @@ interface App {
 
     sealed class States {
         object Idle : States()
-        object Loading : States()
-        data class Items(val items: List<Item>) : States()
-        data class Error(val exception: Throwable) : States()
+
+        data class Items(
+                val items: List<App.Item>? = null,
+                val exception: Throwable? = null,
+                val isLoading: Boolean = false) : States()
     }
 
     sealed class Events {

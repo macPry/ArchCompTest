@@ -20,8 +20,8 @@ class AppModel(private val api: Api) : Model {
 
     private fun callApi() =
             api.getItems().toObservable()
-                    .map { states.accept(States.Items(it)) }
-                    .startWith(states.accept(States.Loading))
-                    .onErrorReturn { states.accept(States.Error(it)) }
+                    .map { states.accept(States.Items(items = it)) }
+                    .startWith(states.accept(States.Items(isLoading = true)))
+                    .onErrorReturn { states.accept(States.Items(exception = it)) }
                     .subscribe()
 }

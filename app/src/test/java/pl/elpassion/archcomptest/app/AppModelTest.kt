@@ -31,7 +31,7 @@ class AppModelTest : TreeSpec() {
                 verify(api).getItems()
             }
             assert("should show loader") {
-                states.assertLastValue(States.Loading)
+                states.assertLastValue(States.Items(items = null, isLoading = true, exception = null))
             }
         }
         nest("On get items when api returns items") {
@@ -41,7 +41,7 @@ class AppModelTest : TreeSpec() {
                 apiSubject.onSuccess(items)
             }
             assert("should return items") {
-                states.assertLastValue(States.Items(items))
+                states.assertLastValue(States.Items(items = items, isLoading = false, exception = null))
             }
         }
         nest("On get items when api returns exception") {
@@ -51,7 +51,7 @@ class AppModelTest : TreeSpec() {
                 apiSubject.onError(exception)
             }
             assert("should return exception") {
-                states.assertLastValue(States.Error(exception))
+                states.assertLastValue(States.Items(items = null, isLoading = false, exception = exception))
             }
         }
     }
