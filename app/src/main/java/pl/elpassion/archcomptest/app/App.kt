@@ -16,8 +16,8 @@ interface App {
 
         data class Items(
                 val items: List<App.Item>? = null,
-                val exception: Throwable? = null,
-                val isLoading: Boolean = false) : States()
+                val isLoading: Boolean = false,
+                val exception: Throwable? = null) : States()
     }
 
     sealed class Events {
