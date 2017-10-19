@@ -7,15 +7,12 @@ import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.archcomptest.R
 import pl.elpassion.archcomptest.app.App
 import pl.elpassion.archcomptest.app.DI
-import pl.elpassion.archcomptest.common.assertLastValue
 
 class ItemsActivityTest {
 
