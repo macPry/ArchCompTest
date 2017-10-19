@@ -20,11 +20,9 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application) {
     init {
         appModel.states
                 .takeUntil(clear)
+                .ofType(App.States.Items::class.java)
                 .subscribe {
-                    when (it) {
-                        is App.States.Items ->
-                            state.postValue(State(items = it.items, isLoading = it.isLoading, exception = it.exception))
-                    }
+                    state.postValue(State(items = it.items, isLoading = it.isLoading, exception = it.exception))
                 }
         event.map {
             when (it) {

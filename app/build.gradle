@@ -7,6 +7,7 @@ buildscript {
     ext.mockito_kotlin_version = '1.5.0'
     ext.mockito_android_version = '2.11.0'
     ext.el_common_version = '0.0.21'
+    ext.support_test_version = '1.0.1'
 }
 
 apply plugin: 'com.android.application'
@@ -35,6 +36,9 @@ android {
         test.java.srcDirs += 'src/testCommon/java'
         androidTest.java.srcDirs += 'src/testCommon/java'
     }
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+    }
 }
 
 dependencies {
@@ -56,5 +60,7 @@ dependencies {
     androidTestImplementation group: 'com.nhaarman', name: 'mockito-kotlin-kt1.1', version: mockito_kotlin_version
     androidTestImplementation group: 'org.mockito', name: 'mockito-android', version: mockito_android_version
     androidTestImplementation group: 'com.elpassion.android.commons', name: 'espresso', version: el_common_version
-    androidTestCompile 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation group: 'com.android.support.test', name: 'runner', version: support_test_version
+    androidTestCompile group: 'com.android.support.test', name: 'rules', version: support_test_version
+    androidTestUtil group: 'com.android.support.test', name: 'orchestrator', version: support_test_version
 }

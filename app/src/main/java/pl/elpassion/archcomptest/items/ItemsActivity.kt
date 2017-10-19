@@ -29,7 +29,7 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun showError(exception: Throwable) {
-        Snackbar.make(itemsLayout, exception.message.toString(), Snackbar.LENGTH_SHORT)
+        Snackbar.make(itemsLayout, "${exception.message}", Snackbar.LENGTH_SHORT)
                 .setAction("Refresh", { })
                 .show()
     }

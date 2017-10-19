@@ -1,5 +1,6 @@
 package pl.elpassion.archcomptest.items
 
+import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import com.elpassion.android.commons.espresso.isDisplayed
 import com.elpassion.android.commons.espresso.isNotDisplayed
@@ -62,14 +63,15 @@ class ItemsActivityTest {
 
     @Test
     fun shouldShowErrorMessageOnAppError() {
-        val exception = Exception("Some error")
-        modelStates.accept(App.States.Items(exception = exception))
-        onText(exception.message!!).isDisplayed()
+        modelStates.accept(App.States.Items(exception = Exception("Some error")))
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+        onText("Some error").isDisplayed()
     }
 
     @Test
     fun shouldShowRefreshButtonOnAppError() {
         modelStates.accept(App.States.Items(exception = RuntimeException()))
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         onText("Refresh").isDisplayed()
     }
 }
