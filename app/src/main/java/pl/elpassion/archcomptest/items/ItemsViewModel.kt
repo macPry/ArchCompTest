@@ -11,7 +11,7 @@ import pl.elpassion.archcomptest.items.Items.*
 class ItemsViewModel(application: Application) : AndroidViewModel(application) {
 
     val state: MutableLiveData<State> = MutableLiveData()
-    val event: PublishRelay<Event> = PublishRelay.create()
+    private val event: PublishRelay<Event> = PublishRelay.create()
 
     private val clear = PublishRelay.create<Unit>()
 
@@ -24,11 +24,12 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application) {
                 .subscribe {
                     state.postValue(State(items = it.items, isLoading = it.isLoading, exception = it.exception))
                 }
-        event.map {
-            when (it) {
-                Event.GetItems -> App.Events.GetItems
-            }
-        }.subscribe(appModel.events)
+        event.startWith(Items.Event.GetItems)
+                .map {
+                    when (it) {
+                        Event.GetItems -> App.Events.GetItems
+                    }
+                }.subscribe(appModel.events)
     }
 
     override fun onCleared() = clear.accept(Unit)
