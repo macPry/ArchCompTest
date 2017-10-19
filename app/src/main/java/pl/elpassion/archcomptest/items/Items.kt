@@ -10,7 +10,7 @@ interface Items {
             val isLoading: Boolean = false)
 
     sealed class Event {
-        object Create : Event()
+        object GetItems : Event()
         /*object Refresh : Event()
         object ErrorClick : Event()
         object ItemClick : Event()*/

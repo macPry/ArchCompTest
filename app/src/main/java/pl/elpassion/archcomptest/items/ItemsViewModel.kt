@@ -28,7 +28,7 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application) {
                 }
         event.map {
             when (it) {
-                Event.Create -> App.Events.GetItems
+                Event.GetItems -> App.Events.GetItems
             }
         }.subscribe(appModel.events)
     }

@@ -19,7 +19,7 @@ class ItemsActivity : AppCompatActivity() {
         itemsViewModel.state.observe(this, Observer {
             updateViews(it)
         })
-        itemsViewModel.event.accept(Items.Event.Create)
+        itemsViewModel.event.accept(Items.Event.GetItems)
     }
 
     private fun updateViews(state: Items.State?) {
