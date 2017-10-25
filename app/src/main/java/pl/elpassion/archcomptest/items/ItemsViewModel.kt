@@ -29,7 +29,6 @@ class ItemsViewModel(application: Application) : AndroidViewModel(application) {
                     when (it) {
                         Event.GetItems -> App.Events.GetItems
                         Event.Refresh -> App.Events.GetItems
-                        Event.ItemClick -> App.Events.OpenDetails
                     }
                 }.subscribe(appModel.events)
     }

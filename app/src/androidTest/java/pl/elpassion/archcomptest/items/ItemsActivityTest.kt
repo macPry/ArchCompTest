@@ -1,5 +1,9 @@
 package pl.elpassion.archcomptest.items
 
+import android.app.Activity
+import android.app.Instrumentation
+import android.support.test.espresso.intent.Intents
+import android.support.test.espresso.intent.matcher.IntentMatchers
 import android.support.test.rule.ActivityTestRule
 import com.elpassion.android.commons.espresso.*
 import com.elpassion.android.commons.espresso.recycler.onRecyclerViewItem
@@ -13,7 +17,7 @@ import org.junit.Test
 import pl.elpassion.archcomptest.R
 import pl.elpassion.archcomptest.app.App
 import pl.elpassion.archcomptest.app.DI
-import pl.elpassion.archcomptest.common.assertLastValue
+import pl.elpassion.archcomptest.details.DetailsActivity
 
 class ItemsActivityTest {
 
@@ -28,6 +32,9 @@ class ItemsActivityTest {
     @JvmField
     @Rule
     val rule = ActivityTestRule(ItemsActivity::class.java)
+
+    @JvmField @Rule
+    val intents = InitIntentsRule()
 
     init {
         DI.provideAppModel = { model }
@@ -80,8 +87,9 @@ class ItemsActivityTest {
 
     @Test
     fun shouldOpenDetailsScreenOnItemClick() {
+        Intents.intending(IntentMatchers.anyIntent()).respondWith(Instrumentation.ActivityResult(Activity.RESULT_CANCELED, null))
         modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
         onRecyclerViewItem(R.id.itemsRecycler, 0, R.id.itemView).click()
-        testObserver.assertLastValue(App.Events.OpenDetails)
+        Intents.intended(IntentMatchers.hasComponent(DetailsActivity::class.java.name))
     }
 }

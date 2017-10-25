@@ -24,7 +24,6 @@ interface App {
 
     sealed class Events {
         object GetItems : Events()
-        object OpenDetails : Events()
     }
 
     interface Api {
