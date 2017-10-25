@@ -13,6 +13,7 @@ import org.junit.Test
 import pl.elpassion.archcomptest.R
 import pl.elpassion.archcomptest.app.App
 import pl.elpassion.archcomptest.app.DI
+import pl.elpassion.archcomptest.common.assertLastValue
 
 class ItemsActivityTest {
 
@@ -75,5 +76,12 @@ class ItemsActivityTest {
         modelStates.accept(App.States.Items(exception = RuntimeException()))
         onText(R.string.refresh).click()
         testObserver.assertValueAt(1, { it is App.Events.GetItems })
+    }
+
+    @Test
+    fun shouldOpenDetailsScreenOnItemClick() {
+        modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
+        onRecyclerViewItem(R.id.itemsRecycler, 0, R.id.itemView).click()
+        testObserver.assertLastValue(App.Events.OpenDetails)
     }
 }

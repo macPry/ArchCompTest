@@ -30,6 +30,7 @@ class ItemsActivity : AppCompatActivity() {
         itemsViewModel.state.observe(this, Observer {
             updateViews(it)
         })
+        (itemsRecycler.adapter as ItemsAdapter).clickEvents().map { Items.Event.ItemClick }.subscribe(itemsViewModel.event)
         errorSnackBar.dismisses().map { Items.Event.Refresh }.subscribe(itemsViewModel.event)
     }
 

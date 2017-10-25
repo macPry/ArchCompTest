@@ -12,7 +12,6 @@ interface Items {
     sealed class Event {
         object GetItems : Event()
         object Refresh : Event()
-        /*object ErrorClick : Event()
-        object ItemClick : Event()*/
+        object ItemClick : Event()
     }
 }
