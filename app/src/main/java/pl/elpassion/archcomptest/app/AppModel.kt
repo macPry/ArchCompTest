@@ -15,6 +15,7 @@ class AppModel(private val api: Api) : Model {
     private fun onEvent(event: Events) {
         when (event) {
             Events.GetItems -> callApi()
+            Events.OpenDetails -> states.accept(States.Details)
         }
     }
 

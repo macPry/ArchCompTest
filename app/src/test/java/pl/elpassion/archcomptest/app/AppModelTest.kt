@@ -54,6 +54,14 @@ class AppModelTest : TreeSpec() {
                 states.assertLastValue(States.Items(items = null, isLoading = false, exception = exception))
             }
         }
+        nest("On open details") {
+            before {
+                model.events.accept(Events.OpenDetails)
+            }
+            assert("should open details screen") {
+                states.assertLastValue(States.Details)
+            }
+        }
     }
 
     private fun getItems() = model.events.accept(Events.GetItems)

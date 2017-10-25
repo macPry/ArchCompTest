@@ -18,10 +18,13 @@ interface App {
                 val items: List<App.Item>? = null,
                 val isLoading: Boolean = false,
                 val exception: Throwable? = null) : States()
+
+        object Details : States()
     }
 
     sealed class Events {
         object GetItems : Events()
+        object OpenDetails : Events()
     }
 
     interface Api {
