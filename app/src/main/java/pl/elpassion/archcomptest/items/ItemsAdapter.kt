@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item.view.*
 import pl.elpassion.archcomptest.R
 import pl.elpassion.archcomptest.app.App
 
-class ItemsAdapter(private val items: List<App.Item>) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter(private val items: List<App.Item>) : RecyclerView.Adapter<ViewHolder>() {
 
     private val clicksSubject = PublishSubject.create<View>()
 
@@ -32,11 +32,11 @@ class ItemsAdapter(private val items: List<App.Item>) : RecyclerView.Adapter<Ite
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
 
     override fun getItemCount() = items.size
+}
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: App.Item) {
-            itemView.name.text = item.name
-        }
+class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bind(item: App.Item) {
+        itemView.name.text = item.name
     }
 }
 
