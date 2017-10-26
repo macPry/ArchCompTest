@@ -2,7 +2,6 @@ package pl.elpassion.archcomptest.items
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -32,8 +31,12 @@ class ItemsActivity : AppCompatActivity() {
         itemsViewModel.state.observe(this, Observer {
             updateViews(it)
         })
-        (itemsRecycler.adapter as ItemsAdapter).clickEvents().subscribe { startActivity(Intent(this, DetailsActivity::class.java)) }
+        (itemsRecycler.adapter as ItemsAdapter).clickEvents().subscribe { startDetailsActivity(it) }
         errorSnackBar.dismisses().map { Items.Event.Refresh }.subscribe(itemsViewModel.event)
+    }
+
+    private fun startDetailsActivity(view: View) {
+        DetailsActivity.start(this, items[itemsRecycler.getChildAdapterPosition(view)].id)
     }
 
     private fun updateViews(state: Items.State?) {

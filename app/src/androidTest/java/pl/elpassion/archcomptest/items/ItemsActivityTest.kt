@@ -11,6 +11,7 @@ import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.PublishRelay
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import org.hamcrest.Matchers
 import io.reactivex.observers.TestObserver
 import org.junit.Rule
 import org.junit.Test
@@ -28,13 +29,15 @@ class ItemsActivityTest {
         on { events } doReturn modelEvents
     }
     private val testObserver = TestObserver<App.Events>()
+    private val items = listOf(App.Item(id = 1, name = "321"), App.Item(id = 2, name = "666"))
+
+    @JvmField
+    @Rule
+    val intents = InitIntentsRule()
 
     @JvmField
     @Rule
     val rule = ActivityTestRule(ItemsActivity::class.java)
-
-    @JvmField @Rule
-    val intents = InitIntentsRule()
 
     init {
         DI.provideAppModel = { model }
@@ -55,13 +58,13 @@ class ItemsActivityTest {
 
     @Test
     fun shouldNotShowLoaderOnAppItemsState() {
-        modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
+        modelStates.accept(App.States.Items(items))
         onId(R.id.itemsLoader).isNotDisplayed()
     }
 
     @Test
     fun shouldShowItemsOnAppItemsState() {
-        modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
+        modelStates.accept(App.States.Items(items))
         onRecyclerViewItem(R.id.itemsRecycler, 0, R.id.itemView).hasChildWithText("321")
         onRecyclerViewItem(R.id.itemsRecycler, 1, R.id.itemView).hasChildWithText("666")
     }
@@ -86,10 +89,12 @@ class ItemsActivityTest {
     }
 
     @Test
-    fun shouldOpenDetailsScreenOnItemClick() {
+    fun shouldPassSelectedItemIdOnItemClick() {
         Intents.intending(IntentMatchers.anyIntent()).respondWith(Instrumentation.ActivityResult(Activity.RESULT_CANCELED, null))
-        modelStates.accept(App.States.Items(listOf(App.Item("321"), App.Item("666"))))
-        onRecyclerViewItem(R.id.itemsRecycler, 0, R.id.itemView).click()
-        Intents.intended(IntentMatchers.hasComponent(DetailsActivity::class.java.name))
+        modelStates.accept(App.States.Items(items))
+        onRecyclerViewItem(R.id.itemsRecycler, 1, R.id.itemView).click()
+        Intents.intended(Matchers.allOf(
+                IntentMatchers.hasExtra("selectedItemIdKey", 2L),
+                IntentMatchers.hasComponent(DetailsActivity::class.java.name)))
     }
 }

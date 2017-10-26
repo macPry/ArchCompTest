@@ -18,8 +18,6 @@ interface App {
                 val items: List<App.Item>? = null,
                 val isLoading: Boolean = false,
                 val exception: Throwable? = null) : States()
-
-        object Details : States()
     }
 
     sealed class Events {
@@ -30,5 +28,5 @@ interface App {
         fun getItems(): Single<List<Item>>
     }
 
-    data class Item(val name: String)
+    data class Item(val id: Long, val name: String)
 }

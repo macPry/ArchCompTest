@@ -14,7 +14,7 @@ object DI {
 
     private val apiProvider = object : Api {
         override fun getItems(): Single<List<Item>> {
-            return Single.just(listOf(Item("ItemName1"), Item("ItemName2"))).delay(2, TimeUnit.SECONDS)
+            return Single.just(listOf(Item(id = 1, name = "ItemName1"), Item(id = 2, name = "ItemName2"))).delay(2, TimeUnit.SECONDS)
         }
     }
 }

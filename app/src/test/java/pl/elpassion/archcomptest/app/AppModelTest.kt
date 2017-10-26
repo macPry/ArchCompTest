@@ -35,7 +35,7 @@ class AppModelTest : TreeSpec() {
             }
         }
         nest("On get items when api returns items") {
-            val items = listOf(Item("1"), Item("2"))
+            val items = listOf(Item(id = 1, name = "1"), Item(id = 2, name = "2"))
             before {
                 getItems()
                 apiSubject.onSuccess(items)
