@@ -39,7 +39,6 @@ dependencies {
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.5'
     implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.1.0'
     implementation group: 'com.jakewharton.rxbinding2', name: 'rxbinding-design-kotlin', version: '2.0.0'
-    implementation group: 'com.jakewharton.rxbinding2', name: 'rxbinding-kotlin', version: '2.0.0'
 
     implementation(group: 'io.kotlintest', name: 'kotlintest', version: '2.0.5') {
         exclude group: 'org.mockito', module: 'mockito-core'
